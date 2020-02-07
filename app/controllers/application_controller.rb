@@ -36,6 +36,16 @@ class ApplicationController < Sinatra::Base
   end 
   
   patch "/animals/:id" do 
-    # @animal = Animal.find(params[:id], :name = params[:name], params[:species], params[])
+   @animal = Animal.find_by_id(params[:id])
+   @animal.name = params[:name]
+   @animal.species = params[:species] 
+   @animal.save 
+   redirect to "/animals/#{@animal.id}"
+  end 
+  
+  delete "/animals/:id" do 
+    @animal = Animal.find_by_id(params[:id])
+    @animal.delete 
+    redirect to "/animals" 
   end 
 end
